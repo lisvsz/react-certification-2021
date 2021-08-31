@@ -1,39 +1,49 @@
-import React, { useRef } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
 
-import { useAuth } from '../../providers/Auth';
-import './Home.styles.css';
+import ErrorModal from '../../components/UIElements/ErrorModal/ErrorModal.component';
+import VideoListHome from '../../components/VideoListHome/VideoListHome.component';
+import LoadingSpinner from '../../components/UIElements/LoadingSpinner';
+import { useHttpClient } from '../../utils/hooks/http-hook';
+import { Context } from '../../utils/store/Store';
 
-function HomePage() {
-  const history = useHistory();
-  const sectionRef = useRef(null);
-  const { authenticated, logout } = useAuth();
+const HomePage = () => {
+  const [data, setData] = useState();
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const state = useContext(Context)[0];
 
-  function deAuthenticate(event) {
-    event.preventDefault();
-    logout();
-    history.push('/');
-  }
+  useEffect(() => {
+    const fetchPlaces = async (queryFromSearchBarParam) => {
+      const baseURL = 'https://www.googleapis.com/youtube/v3/search';
+      const apikey = 'AIzaSyDN0P1UB4W39-XdmmA9wniCAlXA0f3WprU';
+      const maxResults = 10;
+      const queryToSearch = queryFromSearchBarParam;
+
+      try {
+        const responseData = await sendRequest(
+          `${baseURL}?part=snippet&key=${apikey}&q=${queryToSearch}&maxResults=${maxResults}`
+        );
+        setData(responseData);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchPlaces(state.queryToSearch);
+  }, [sendRequest, state.queryToSearch]);
 
   return (
-    <section className="homepage" ref={sectionRef}>
-      <h1>Hello stranger!</h1>
-      {authenticated ? (
-        <>
-          <h2>Good to have you back</h2>
-          <span>
-            <Link to="/" onClick={deAuthenticate}>
-              ← logout
-            </Link>
-            <span className="separator" />
-            <Link to="/secret">show me something cool →</Link>
-          </span>
-        </>
-      ) : (
-        <Link to="/login">let me in →</Link>
+    <>
+      <ErrorModal error={error} onClear={clearError} />
+      {isLoading && (
+        <div>
+          <LoadingSpinner />
+        </div>
       )}
-    </section>
+      {state.isLoggedIn && <p>Hello! You are logged In</p>}
+      <p>Home!</p>
+      {!isLoading && data && <VideoListHome data={data} />}
+    </>
   );
-}
+};
 
 export default HomePage;
