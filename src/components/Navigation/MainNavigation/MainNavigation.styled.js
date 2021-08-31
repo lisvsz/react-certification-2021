@@ -34,13 +34,22 @@ export const ToggleAndLogIconContainer = styled.div`
 
   .logIcon {
     div {
-      /*       margin: 0;
+      margin: 0;
       margin-right: 10px;
       background-color: red;
       width: 40px;
       height: 40px;
       border-radius: 31px;
-      cursor: pointer; */
+      cursor: pointer;
+    }
+
+    img {
+      margin: 0;
+      margin-right: 10px;
+      background-color: red;
+      width: 40px;
+      height: 40px;
+      border-radius: 31px;
       cursor: pointer;
     }
   }

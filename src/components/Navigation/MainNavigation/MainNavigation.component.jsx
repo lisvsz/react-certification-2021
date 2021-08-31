@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 import MainHeader from '../MainHeader';
 import SideDrawer from '../SideDrawer';
@@ -7,10 +7,11 @@ import Backdrop from '../../UIElements/Backdrop';
 import SearchInput from '../../SearchInput';
 import Toggle from '../../UIElements/Toggle';
 import { Button, ToggleAndLogIconContainer } from './MainNavigation.styled';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Context } from '../../../utils/store/Store';
 
 const MainNavigation = () => {
+  const [state] = useContext(Context);
+
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
 
   const openDrawerHandler = () => setDrawerIsOpen(true);
@@ -42,18 +43,11 @@ const MainNavigation = () => {
           </div>
 
           <div className="logIcon">
-            <FontAwesomeIcon
-              color="white"
-              icon={faUser}
-              style={{
-                background: '#bab9b5',
-                height: '20px',
-                width: '30px',
-                cursor: 'pointer',
-                borderRadius: '50px',
-              }}
-            />
-            <div />
+            {state.isLoggedIn ? (
+              <img src={state.userData.avatarUrl} alt={state.userData.name} />
+            ) : (
+              <div />
+            )}
           </div>
         </ToggleAndLogIconContainer>
       </MainHeader>

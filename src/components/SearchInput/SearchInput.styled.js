@@ -10,16 +10,13 @@ export const Form = styled.form`
   div {
     width: 32px;
     height: 100%;
-    background: black;
+    background: red;
     cursor: pointer;
   }
 
   input {
     width: 205px;
     outline: none;
-    border-radius: 50px;
-    padding-left: 35px;
-    background: white;
   }
 
   @media (min-width: 600px) {
@@ -28,5 +25,11 @@ export const Form = styled.form`
     display: flex;
     margin-top: 14px;
     margin-left: 50px;
+
+    div {
+      width: 37px;
+      height: 100%;
+      background: red;
+    }
   }
 `;

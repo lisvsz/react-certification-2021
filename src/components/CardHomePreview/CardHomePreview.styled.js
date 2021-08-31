@@ -5,27 +5,28 @@ export const Card = styled.div`
   margin: 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: 6px;
-  padding-bottom: 1rem;
+  padding: 1rem;
   overflow: hidden;
-  background: white;
+  background: ${({ theme }) => theme.backgroundCard};
   width: 100%;
   height: 100%;
   cursor: pointer;
 
   .card-home-review__image {
     width: 100%;
-    height: 9.5rem;
+    height: 7.5rem;
+    margin-right: 1.5rem;
 
     img {
       width: 100%;
-      height: 90%;
+      height: 100%;
       object-fit: cover;
     }
   }
 
   .card-home-review__info {
     padding: 1rem;
-    text-align: flex-start;
+    text-align: center;
 
     h2,
     p {
@@ -33,12 +34,11 @@ export const Card = styled.div`
     }
 
     h2 {
-      font-size: 19px;
+      font-size: 20px;
     }
 
     p {
-      font-size: 15px;
-      color: grey;
+      font-size: 16px;
     }
   }
 `;

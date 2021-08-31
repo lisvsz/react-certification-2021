@@ -19,7 +19,7 @@ export const ToggleContainer = styled.label`
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #428495;
+    background-color: #ccc;
     -webkit-transition: 0.4s;
     transition: 0.4s;
   }
@@ -37,7 +37,7 @@ export const ToggleContainer = styled.label`
   }
 
   input:checked + .slider {
-    background-color: #2196f3;
+    background-color: ${({ theme }) => theme.toggleBackground};
   }
 
   input:focus + .slider {
